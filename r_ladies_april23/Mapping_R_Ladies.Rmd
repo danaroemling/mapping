@@ -35,7 +35,7 @@ https://doi.org/10.1017/S1360674316000113) for more information.
 The initial step now is reading in the data set, which is located in my Github.
 
 ```{r swearing data, message=FALSE}
-norm_swear <- read.table("https://raw.githubusercontent.com/danaroemling/mapping/main/MAPPING_SWEARING.csv", header = TRUE, sep = ",")
+norm_swear <- read.table("https://raw.githubusercontent.com/danaroemling/mapping/main/r_ladies_april23/MAPPING_SWEARING.csv", header = TRUE, sep = ",")
 ```
 
 The basic dimension of the data set is 52 swear words measured across 3,076 locations, denoted by state plus county (= 53).
@@ -375,7 +375,7 @@ gsa_map
 If we wanted to add cities to this, because we're interested in looking at a city level population, we can do this by using geom_point. Let's first load some data to do this.
 
 ```{r dialect data, message=FALSE}
-gsa_data <- read.table("https://raw.githubusercontent.com/danaroemling/mapping/main/MAPPING_DIALECT.csv", header = TRUE, sep = ",")
+gsa_data <- read.table("https://raw.githubusercontent.com/danaroemling/mapping/main/r_ladies_april23/MAPPING_DIALECT.csv", header = TRUE, sep = ",")
 ```
 
 Note that we have a data set which contains both the linguistic information (here the counts and proportion) and the geolocation information. With this, we can map the data using the cities. 
