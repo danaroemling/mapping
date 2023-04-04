@@ -23,6 +23,7 @@ In preparation for our maps, we'll need to load a couple of packages. For mappin
 ```{r prep, message=FALSE}
 library(maps) # to get US maps
 library(rnaturalearth) # mapping other country outlines
+library(rnaturalearthhires) # high resolution
 library(tidyverse) # making pretty maps
 library(sf) # to change the geo-information to suitable format
 ```
@@ -66,13 +67,13 @@ First, we need to get a map of the US, which we will format and use as a base to
 
 #### Accessing Mapping Data in R
 
-First, we need to get a US map. Fortunately working with US data is very easy in R, since all the necessary maps can be accessed in library(maps). We use ggplot's map_data function to extract the relevant information from the package. 
+First, we need to get a US map. Fortunately working with US data is very easy in R, since all the necessary maps can be accessed either in library(maps) or through ggplot2. We use ggplot's map_data function to extract the relevant information from the package. 
 
 ```{r us_map1, message=FALSE}
 usa <- map_data("usa")
 ```
 
-Now we'll have a look at the very basic US map. For this we'll need ggplot:
+Now we'll have a look at the very basic US map. For this we'll need ggplot2. For any ggplot to work, we need three basic components: data, aesthetic, and geoms. The data is the resource we use and want to visualise. The geometric objects (stuff like points, shapes, lines etc.) is the format in which the data gets put. We need the aesthetics to link between the data and the geometric objects (geoms), so that R knows how the data is visualised. 
 
 ```{r us_map2}
 ggplot() + 
@@ -82,7 +83,7 @@ ggplot() +
 
 ### Other countries
 
-If you want to map other countries, you can download and read in the base mapping data (e.g. shapefiles), which are available from various different sources. This is especially interesting if you're looking to work with administrative regions and the like. For country outlines, you can also use library(rworldmaps). This example below shows how to produce a map of Germany, Austria and Switzerland (= German-Speaking Area, GSA). rworldmap works with coordinates. 
+If you want to map other countries, you can download and read in the base mapping data (e.g. shapefiles), which are available from various different sources. This is especially interesting if you're looking to work with administrative regions and the like. For country outlines, you can also use library(rnaturalearth) or library(rworldmap). This example below shows how to produce a map of Germany, Austria and Switzerland (= German-Speaking Area, GSA). 
 
 What this code chunk does is getting the world map and then creating a list of three countries by name. Then we create a map based on that list and in the next step we get the coordinates of those countries, so that we can use these for mapping.
 
@@ -110,8 +111,7 @@ ggplot() +
                aes(x = long, y = lat, group = group),
                # to see the counties we add a colour for outline and filling
                color = "black", fill = "lightgrey", 
-               linewidth = .1 ) +
-  coord_fixed(1.3)
+               linewidth = .1 )
 ```
 
 #### Polishing our map
@@ -139,13 +139,15 @@ ggplot() +
 
 Now that we have a base map and our data read in, we need to make sure the data can be mapped. This might look a bit complicated, but what we're doing is getting the coordinate data that we need to join our existing data set. 
 
-First, we get a map of the counties (aka the geo-information we need) and save it as us_geo (and have a little look, colourful!). For this we need the package 'sf'. We're still using the same "maps" library as before, but since each county has multiple sets of coordinates, we need a format that can be matched to our data set, where each location is just one row, hence we're handling it with 'sf'. We merge the two separate lists into one using dplyr. 
+First, we get a map of the counties (aka the geo-information we need) and save it as us_geo (and have a little look). For this we need the package 'sf'. We're still using the same "maps" library as before, but since each county has multiple sets of coordinates, we need a format that can be matched to our data set, where each location is just one row, hence we're handling it with 'sf'. We merge the two separate lists into one using dplyr. 
 
 ```{r merge, message=FALSE}
 us_geo <- st_as_sf(maps::map(database = "county", 
                              plot = FALSE, 
                              fill = TRUE))
-plot(us_geo)
+
+ggplot(data = us_geo) +
+  geom_sf()
 
 us_geo_swear <- us_geo %>%
   left_join(norm_swear, 
@@ -192,7 +194,7 @@ ggplot() +
         plot.title = element_text(hjust = 0.5)) 
 ```
 
-That looks sort of like what we want, so let's rework it a bit. Note that we divide the occurrences of 'ass' by 10.000, since we're dealing with high numbers we can thus make our graph easier to read this way.
+That looks sort of like what we want, so let's rework it a bit. Note that we divide the occurrences of 'ass' by 10,000, since we're dealing with high numbers we can thus make our graph easier to read this way. We had billions before, now we are dealing with hundred thousands. So instead of, for example, 49600 occurrences of asshole per billion words in Alabama, Autauga, we know use 4.96 occurrences per 100,000 words.
 
 ```{r full_map1.2}
 ggplot() +
@@ -203,7 +205,7 @@ ggplot() +
   theme_minimal() +  
   coord_sf(crs = "ESRI:102003") + 
   ggtitle("'Ass' Distribution in the US per County") +# this adds a new legend title with line break \n
-  guides(fill = guide_legend(title = "Distribution \nin 10.000")) + # here we start using some nicer colours
+  guides(fill = guide_legend(title = "Distribution")) + # here we start using some nicer colours
   scale_fill_continuous(low = "white", 
                         high = "mediumpurple4") + 
   theme(axis.title.x = element_blank(),
@@ -228,7 +230,7 @@ ggplot() +
   theme_minimal() +  
   coord_sf(crs = "ESRI:102003") + 
   ggtitle("'Dickhead' Distribution in the US per County") + 
-  guides(fill = guide_legend(title = "Distribution \nin 10.000")) + 
+  guides(fill = guide_legend(title = "Distribution")) + 
   scale_fill_continuous(low = "white", 
                         high = "mediumpurple4") + 
   theme(axis.title.x = element_blank(),
@@ -252,7 +254,7 @@ ggplot() +
   theme_minimal() +  
   coord_sf(crs = "ESRI:102003") + 
   ggtitle("'Fuck' Distribution in the US per County") + 
-  guides(fill = guide_legend(title = "Distribution \nin 10.000")) + 
+  guides(fill = guide_legend(title = "Distribution")) + 
   scale_fill_continuous(low = "white", 
                         high = "aquamarine4") + # green this time?
   theme(axis.title.x = element_blank(),
