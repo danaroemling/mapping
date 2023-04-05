@@ -163,7 +163,7 @@ class(us_geo_swear)
 head(us_geo_swear) 
 # If you open the data frame and scroll to the last column, 
 # you can see the list in the list.
-view(us_geo_swear) 
+#view(us_geo_swear) 
 ```
 
 Now that the data is prepared, we can try and map some swear words. Note that we've added geom_sf to the plot. We do this because it can handle the sf data we've added for the geolocation of our swear words. That also means we don't need geom_polygon, but by the name you can tell it has similar functionality. 
@@ -364,7 +364,7 @@ Remember our map for the German-speaking area.
 gsa
 ```
 
-If we wanted to add cities to this, because we're interested in looking at a city level population, we can do this by using geom_point. Let's first load some data to do this.
+If we wanted to add cities to this, because we're interested in looking at a city level population, we can do this by using geom_point. Let's first load some data to do this. The data here is a tiny portion of the data used by Hovy & Purschke in their [2018 paper](https://aclanthology.org/D18-1469/).
 
 ```{r dialect data, message=FALSE}
 gsa_data <- read.table("https://raw.githubusercontent.com/danaroemling/mapping/main/r_ladies_april23/MAPPING_DIALECT.csv", header = TRUE, sep = ",")
