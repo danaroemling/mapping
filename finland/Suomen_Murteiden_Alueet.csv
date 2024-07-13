@@ -1,0 +1,29 @@
+Dialect,Maakunta,Kunta,Key,Note,,,Mapped
+Kaakkois,Etelä Karjala,,02,,,,X
+,,Virolahti,935,,,,X
+,,Miehikkälä,489,,,,X
+Savolais,Pohjois Karjala,,13,,,,X
+,Etelä Savo,,04,,,,X
+,Pohjois Savo,,15,,,,X
+,Kainuu,,05,,,,X
+,,!Vaala,785,Osa Vaalasta on länsissä,,,
+,Keski Suomi,,08,,,,X
+,,!Jämsä,182,Osa Jämsästä on länsissä,,,
+,Etelä Pohjanmaa,,03,"(Ei kokonais, vain:)",,,
+,,Ähtäri,989,,,,X
+,,Soini,759,,,,X
+,,Alajärvi,005,,,,X
+,,Lappajärvi,403,,,,X
+,,Evijärvi,052,,,,X
+,,Kauhava,233,Osa,,,X
+,,Vimpeli,934,,,,X
+,Päijät Häme,,16,"(Ei kokonais, vain:)",,,
+,,Heinola,111,,,,
+,,Sysmä,781,,,,X
+,,Hartola,081,,,,X
+,Pohjois Pohjanmaa,,14,"(Ei kokonais, vain:)",,,
+,,Pyhäjärvi,626,,,,X
+,,Kuusamo,305,,,,X
+,,Taivalkoski,832,,,,X
+,Lapin Lääni,,10,"(Ei kokonais, vain:)",,,
+,,Posio,614,,,,X
