@@ -1,0 +1,1 @@
+Basic mapping for Turkey
