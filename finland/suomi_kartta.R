@@ -33,13 +33,13 @@ kaakkois2 <- st_transform(kaakkois2, CRS("+proj=longlat +datum=WGS84 +no_defs +e
 
 # savolais murteet
 savo <- within_suomi %>% dplyr::filter(iso_3166_2 == "FI-13" | iso_3166_2 == "FI-04" | iso_3166_2 == "FI-15" | iso_3166_2 == "FI-08" | iso_3166_2 == "FI-05") %>% dplyr::select(geometry) 
-savo2 <- suomi_sf %>% dplyr::filter(kunta == "989" | kunta == "759" | kunta == "403"| kunta == "005"| kunta == "052" | kunta == "781" | kunta == "081" | kunta == "233" | kunta == "934") %>% dplyr::select(geometry) 
+savo2 <- suomi_sf %>% dplyr::filter(kunta == "989" | kunta == "759" | kunta == "403"| kunta == "005"| kunta == "052" | kunta == "781" | kunta == "081" | kunta == "233" | kunta == "934" | kunta == "626" | kunta == "305" | kunta == "614" | kunta == "832") %>% dplyr::select(geometry) 
 savo2 <- st_transform(savo2, CRS("+proj=longlat +datum=WGS84 +no_defs +ellps=WGS84 +towgs84=0,0,0"))
 
 
 
 # export map
-tiff("suomi.tiff", units="in", width=3, height=4.5, res=300)
+tiff("suomi.tiff", units="in", width=3, height=4.23, res=300)
 
 ggplot() +
   geom_sf(data = suomi_plot, aes(geometry = geometry), color="snow2", fill="grey25", size = 0.5) +
